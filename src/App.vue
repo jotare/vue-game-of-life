@@ -2,13 +2,16 @@
 <div id="app" class="container">
 
   <section class="section">
-    <table>
+    <table
+      @mousedown="on_mouse_down"
+      @mouseup="on_mouse_up">
       <tr v-for="i in size.height" :key="i">
         <td
           v-for="j in size.width" :key="j"
           :x="i" :y="j"
           :class="{ alife: universe[i-1][j-1] , dead: !universe[i-1][j-1]}"
-          @click="toggle_cell">
+          @click="toggle_cell"
+          @mouseover="drag_toggle_cell">
         </td>
       </tr>
     </table>
@@ -59,7 +62,8 @@ export default {
                 height: height
             },
             timer: null,
-            timeout: 10
+            timeout: 10,
+            is_mouse_clicked: false
         }
     },
     computed: {
@@ -68,8 +72,15 @@ export default {
         }
     },
     methods: {
+        on_mouse_down() { this.is_mouse_clicked = true; },
+        on_mouse_up() { this.is_mouse_clicked = false; },
+        
         is_alive(x, y) {
             return this.universe[x][y];
+        },
+        drag_toggle_cell(evt) {
+            if (this.is_mouse_clicked)
+                this.toggle_cell(evt);
         },
         toggle_cell(evt) {
             let x = evt.target.attributes.x.value - 1;
