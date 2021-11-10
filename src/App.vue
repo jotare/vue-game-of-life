@@ -26,7 +26,7 @@
         <i class="fa fa-solid fa-play"></i>
       </button>
       <button @click="pause" v-if="is_playing" class="button is-info">
-        <i class="fa fa-solid fa-stop"></i>
+        <i class="fa fa-solid fa-pause"></i>
       </button>
       <button @click="step" class="button is-info">
         Step
@@ -88,8 +88,8 @@ export default {
             this.universe[x][y] = this.is_alive(x, y) ? 0 : 1;
         },
         clear_universe() {
-            for (let i = 1; i < this.size.height-1; i++) {
-                for (let j = 1; j < this.size.width-1; j++) {
+            for (let i = 0; i < this.size.height; i++) {
+                for (let j = 0; j < this.size.width; j++) {
                     this.universe[i][j] = 0;
                 }
             }
